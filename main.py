@@ -24,9 +24,13 @@ print(separator)
 print("System Info")
 print(separator)
 
+os_info = platform.freedesktop_os_release()
 
-print(f"{'OS Name:':<15}{platform.system()}")
-print(f"{'OS Version:':<15}{platform.release()}")
-print(f"{'Architecture:':<15}{platform.machine()}")
-print(f"{'Hostname:':<15}{platform.node()}")
+
+print(f"{'OS Name:':<25}{platform.system()}")
+print(f"{'Kernel:':<25}{platform.release()}")
+print(f"{'OS Distribution:':<25}{os_info['PRETTY_NAME']}")
+print(f"{'Architecture:':<25}{platform.machine()}")
+print(f"{'Hostname:':<25}{platform.node()}")
+
 print(separator)
