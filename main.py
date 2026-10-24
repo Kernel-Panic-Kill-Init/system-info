@@ -13,24 +13,48 @@
     ### 13. dyski ❌
     ### 14. wolne miejsce ❌
     ### 15. Ładnie sformatowany raport. ❌
+
 import platform
+import os
 
-#print("OS Name:", platform.system())
-#print("OS Version:", platform.version())
+#separator = "=" * 70
 
-separator = "=" * 70
-
-print(separator)
-print("System Info")
-print(separator)
-
-os_info = platform.freedesktop_os_release()
+#print(separator)
+#print("System Info")
+#print(separator)
+#
+#os_info = platform.freedesktop_os_release()
 
 
-print(f"{'OS Name:':<25}{platform.system()}")
-print(f"{'Kernel:':<25}{platform.release()}")
-print(f"{'OS Distribution:':<25}{os_info['PRETTY_NAME']}")
-print(f"{'Architecture:':<25}{platform.machine()}")
-print(f"{'Hostname:':<25}{platform.node()}")
+#print(f"{'OS Name:':<25}{platform.system()}")
+#print(f"{'Kernel:':<25}{platform.release()}")
+#print(f"{'OS Distribution:':<25}{os_info['PRETTY_NAME']}")  #[LINUX]
+#print(f"{'Architecture:':<25}{platform.machine()}")
+#print(f"{'Hostname:':<25}{platform.node()}")
+#
+#print(separator)
 
-print(separator)
+
+def collect_system_info():
+    os_info = platform.freedesktop_os_release()
+
+    os_name = platform.system()
+    kernel = platform.release()
+    os_distribution = os_info['PRETTY_NAME']
+    architecture = platform.machine()
+    hostname = platform.node()
+
+    system_info={
+        "OS Name" : os_name,
+        "Kernel" : kernel,
+        "OS Distribution" : os_distribution,
+        "Architecture" : architecture,
+        "Hostname" : hostname,
+
+    }
+    return system_info
+
+system_info = collect_system_info()
+
+print(system_info)
+print(system_info["Hostname"])
