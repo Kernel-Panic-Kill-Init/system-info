@@ -17,22 +17,7 @@
 import platform
 import os
 
-#separator = "=" * 70
 
-#print(separator)
-#print("System Info")
-#print(separator)
-#
-#os_info = platform.freedesktop_os_release()
-
-
-#print(f"{'OS Name:':<25}{platform.system()}")
-#print(f"{'Kernel:':<25}{platform.release()}")
-#print(f"{'OS Distribution:':<25}{os_info['PRETTY_NAME']}")  #[LINUX]
-#print(f"{'Architecture:':<25}{platform.machine()}")
-#print(f"{'Hostname:':<25}{platform.node()}")
-#
-#print(separator)
 
 
 def collect_system_info():
@@ -56,5 +41,17 @@ def collect_system_info():
 
 system_info = collect_system_info()
 
-print(system_info)
-print(system_info["Hostname"])
+
+
+def display_report(system_info):
+    separator = 104*"="
+    title = 41*"=" + " System Snapshot Tool " + 41*"="
+    print(title)
+    print(f"{'OS Name:':<25}{system_info["OS Name"]}")
+    print(f"{'Kernel:':<25}{system_info["Kernel"]}")
+    print(f"{'OS Distribution:':<25}{system_info["OS Distribution"]}")  #[LINUX]
+    print(f"{'System Architecture:':<25}{system_info["Architecture"]}")
+    print(f"{'Hostname:':<25}{system_info["Hostname"]}")
+    print(separator)
+
+display_report(system_info)
