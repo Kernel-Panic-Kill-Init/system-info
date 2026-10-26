@@ -1,14 +1,14 @@
    ### 1. wyświetl nazwę systemu ✔️
     ### 2. wyświetl wersję systemu ✔️
     ### 3. wyświetl kernel ✔️
-    ### 4. wyświetl architekturę CPU ❌
+    ### 4. wyświetl architekturę CPU 🟡 w trakcie
     ### 5. zakończ program ❌
     ### 6. hostname ✔️
     ### 7. nazwa komputera ❌
     ### 8. ilość RAM ❌
     ### 9. użycie RAM ❌
-    ### 10. CPU ❌
-    ### 11. liczba rdzeni ❌
+    ### 10. CPU ✔️
+    ### 11. liczba rdzeni ✔️
     ### 12. liczba wątków ❌
     ### 13. dyski ❌
     ### 14. wolne miejsce ❌
@@ -16,6 +16,7 @@
 
 import platform
 import os
+import psutil
 ##########################################
 ##########################################
 ##########################################
@@ -27,6 +28,8 @@ def collect_system_info():
     os_version = os_info['VERSION_ID']
     architecture = platform.machine()
     hostname = platform.node()
+    physical_cores = psutil.cpu_count(logical=False)
+    logical_cores = psutil.cpu_count(logical=True)
     
     with open('/proc/cpuinfo', 'r') as cpu_file:
         for line in cpu_file:
@@ -42,6 +45,8 @@ def collect_system_info():
           "Architecture" : architecture,
           "Hostname" : hostname,
           "CPU Model" : cpu_model,
+          "Physical Cores" : physical_cores,
+          "Logical Cores" : logical_cores
           }
         
         
@@ -69,6 +74,8 @@ def display_report(system_info):
     print(f"{'Hostname:':<25}{system_info["Hostname"]}")
     print(cpu_module)
     print(f"{'CPU Model:':<25}{system_info["CPU Model"]}")
+    print(f"{'Physical Cores:':<25}{system_info["Physical Cores"]}")
+    print(f"{'Logical Cores:':<25}{system_info["Logical Cores"]}")
     print(separator)
 
 display_report(system_info)
@@ -78,4 +85,4 @@ display_report(system_info)
 ##########################################
 
 
-    
+
