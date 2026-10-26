@@ -27,10 +27,10 @@ def collect_system_info():
     os_version = os_info['VERSION_ID']
     architecture = platform.machine()
     hostname = platform.node()
-
+    
     with open('/proc/cpuinfo', 'r') as cpu_file:
         for line in cpu_file:
-              if "model name" in line:
+            if "model name" in line:
                 cpu_model = line.split(':', 1)[1].strip()
                 break
             
