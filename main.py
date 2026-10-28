@@ -1,3 +1,4 @@
+
    ### 1. wyświetl nazwę systemu ✔️
     ### 2. wyświetl wersję systemu ✔️
     ### 3. wyświetl kernel ✔️
@@ -11,7 +12,7 @@
     ### 11. liczba rdzeni ✔️
     ### 12. liczba wątków ✔️
     ### 13. dyski ❌
-    ### 14. wolne miejsce ❌
+    ### 14. wolne miejsce ✔️
     ### 15. Ładnie sformatowany raport. ✔️
 
 import platform
@@ -31,7 +32,13 @@ def collect_system_info():
     physical_cores = psutil.cpu_count(logical=False)
     logical_cores = psutil.cpu_count(logical=True)
     info_ram = psutil.virtual_memory()
-
+    disk_info = psutil.disk_partitions(all=False)
+    disk_usage = psutil.disk_usage('/')
+    total_disk_space = disk_usage.total
+    used_disk = disk_usage.used
+    free_disk_space = disk_usage.free
+    percent_disk_space = disk_usage.percent
+    
     with open('/proc/cpuinfo', 'r') as cpu_file:
         for line in cpu_file:
             if "model name" in line:
@@ -51,6 +58,11 @@ def collect_system_info():
           "Total RAM" : info_ram.total,
           "Available RAM" : info_ram.available,
           "Percent RAM" : info_ram.percent,
+          "Disk Info" : disk_info,
+          "Total Disk Space" : total_disk_space,
+          "Free Disk Space" : free_disk_space,
+          "Used Disk Space" : used_disk,
+          "Percent Disk Space" : percent_disk_space
           }
         
         
@@ -69,6 +81,7 @@ def display_report(system_info):
     system_module = 47*"=" + "  SYSTEM  " + 47*"="
     cpu_module = 47*"=" + "   CPU    " + 47*"="
     ram_module = 47*"=" + "   RAM    " + 47*"="
+    disk_module = 48*"=" + "  DISK  " + 48*"="
     print(title)
     print(separator)
     print(system_module)
@@ -87,6 +100,13 @@ def display_report(system_info):
     print(f"{'Total RAM:':<25}{system_info["Total RAM"]/ (1024 ** 3):.2f} GiB")
     print(f"{'Available RAM:':<25}{system_info["Available RAM"] /(1024 ** 3):.2f} GiB")
     print(f"{'RAM Usage':<25}{system_info["Percent RAM"]:.2f}%")
+    #print(f"{'Disk Info:':<25}{system_info['Disk Info']}")
+    print(separator)
+    print(disk_module)
+    print(f"{'Total Disk Space:':<25}{system_info['Total Disk Space'] /(1024 **3):.2f} GiB")
+    print(f"{"Free Disk Space:":<25}{system_info['Free Disk Space']/(1024 **3):.2f} GiB")
+    print(f"{"Used Disk Space:":<25}{system_info['Used Disk Space']/(1024 **3):.2f} GiB")
+    print(f"{"Used Disk Space Percent:":<25}{system_info['Percent Disk Space']:.2f}%")
 
 display_report(system_info)
 
