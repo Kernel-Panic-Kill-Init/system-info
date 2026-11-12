@@ -18,9 +18,9 @@
 import platform
 import os
 import psutil
+
 ##########################################
-##########################################
-##########################################
+
 def collect_system_info():
     os_info = platform.freedesktop_os_release()
     os_name = platform.system()
@@ -38,13 +38,19 @@ def collect_system_info():
     used_disk = disk_usage.used
     free_disk_space = disk_usage.free
     percent_disk_space = disk_usage.percent
+    cpu_model = "N/A"
     
-    with open('/proc/cpuinfo', 'r') as cpu_file:
-        for line in cpu_file:
-            if "model name" in line:
-                cpu_model = line.split(':', 1)[1].strip()
-                break
-            
+    try:
+
+        with open('/proc/cpuinfo', 'r') as cpu_file:
+            for line in cpu_file:
+                if "model name" in line:
+                    cpu_model = line.split(':', 1)[1].strip()
+                    break
+    except OSError:
+        pass
+
+
     system_info={
           "OS Name" : os_name,
           "Kernel" : kernel,
@@ -70,8 +76,6 @@ def collect_system_info():
     return system_info
 system_info = collect_system_info()
 
-##########################################
-##########################################
 ##########################################
 
 def display_report(system_info):
@@ -111,8 +115,3 @@ def display_report(system_info):
 display_report(system_info)
 
 ##########################################
-##########################################
-##########################################
-
-
-
